@@ -1,0 +1,79 @@
+﻿@model WebPhongKham.Models.KhachHang
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout-admin.cshtml";
+}
+
+<h3>Chỉnh sửa thông tin</h3>
+
+<h2>Khách hàng : <p style="color:red; display:inline"> @Model.HoTen - Id : @Model.Id</p></h2>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="HoTen" class="control-label"></label>
+                <input asp-for="HoTen" class="form-control" />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySinh" class="control-label"></label>
+                <input asp-for="NgaySinh" class="form-control" type="date"/>
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoDienThoai" class="control-label"></label>
+                <input asp-for="SoDienThoai" class="form-control" />
+                <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoTien" class="control-label"></label>
+                <input asp-for="SoTien" class="form-control" />
+                <span asp-validation-for="SoTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Active" class="control-label"></label>
+                <select asp-for="Active" class="form-control" id="activeSelect">
+                    <option value="" disabled selected>-- Chọn trạng thái --</option>
+                    <option value="true">Hoạt động</option>
+                    <option value="false">Khoá</option>
+                </select>
+                <span asp-validation-for="Active" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Địa chỉ</label>
+                <select asp-for="idDiaChi" class="form-control" asp-items="ViewBag.idDiaChi"></select>
+                <span asp-validation-for="idDiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var select = document.getElementById("activeSelect");
+
+        // Hàm thay đổi màu sắc dựa trên giá trị
+        function changeColor() {
+            select.style.backgroundColor = select.value === "true" ? "green" : "red";
+            select.style.color = "white";
+        }
+
+        // Gọi hàm đổi màu ngay khi trang tải
+        changeColor();
+
+        // Lắng nghe sự kiện thay đổi giá trị của select
+        select.addEventListener("change", changeColor);
+    });
+</script>

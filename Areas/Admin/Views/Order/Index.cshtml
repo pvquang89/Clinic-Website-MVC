@@ -1,0 +1,188 @@
+﻿@model IEnumerable<WebPhongKham.Models.DonHang>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+
+
+
+@{
+    ViewData["Title"] = "Đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout-admin.cshtml";
+}
+
+<!-- Hiển thị thông báo nếu không tìm thấy kết quả -->
+@if (ViewBag.Error != null)
+{
+    @* Thông báo không tìm thấy *@
+    <div class="alert alert-warning" role="alert">
+        @ViewBag.Error
+    </div>
+    <style>
+        .card-body {
+            display: none;
+        }
+    </style>
+}
+
+<div class="form-group d-flex justify-content-between align-items-center">
+    <div>
+        <a asp-action="Create" class="btn btn-primary">Thêm đơn hàng</a>
+    </div>
+
+    <div>
+        <form asp-action="Index" method="get" class="form-inline">
+            <label for="sortOrder" class="mr-2">Sắp xếp theo:</label>
+            <select id="sortOrder" name="sortOrder" class="form-control" onchange="this.form.submit()">
+                <option value="">Lựa chọn</option>
+                <option value="date_desc">Ngày đặt (Mới nhất)</option>
+                <option value="price_desc">Tổng tiền (Giảm dần)</option>
+                <option value="price_asc">Tổng tiền (Tăng dần)</option>
+            </select>
+        </form>
+    </div>
+</div>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 style="display:inline" class="m-0 font-weight-bold text-primary">Danh sách đơn hàng</h6>
+
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+              style="float:right" asp-action="Search" asp-controller="Order" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm theo địa chỉ/ tên hàng.."
+                       aria-label="Search" aria-describedby="basic-addon2"
+                       name="keywordSearching">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.HinhAnh)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NgayDatHang)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DienThoai)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ThongTinSanPham)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DiaChi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TongTienSanPham)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhiShip)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.KhachHang)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.HinhAnh)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NgayDatHang)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DienThoai)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ThongTinSanPham)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DiaChi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TongTienSanPham)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhiShip)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.KhachHang)
+                        </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@item.HinhAnh" alt="HinhAnh" style="width:100px;height:100px;" />
+                            </td>
+                            <td>
+                                @item.NgayDatHang.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DienThoai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ThongTinSanPham)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiaChi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TongTienSanPham)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhiShip)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KhachHang.HoTen)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+
+@* Căn phải thanh phân trang bằng float-right của bootstrap *@
+<div class="float-right">
+    @Html.PagedListPager(
+            (IPagedList)Model,
+            page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                //cấu hình css 
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+            })
+</div>
+
+

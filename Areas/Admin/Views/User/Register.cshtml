@@ -1,0 +1,206 @@
+﻿@model WebPhongKham.Models.TaiKhoan
+
+@{
+    Layout = null;
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/admintemplate/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="~/admintemplate/css/sb-admin-2.min.css" rel="stylesheet" />
+    
+    <style>
+        .error {
+            color: red;
+            font-size: 0.875em;
+        }
+        .error-input {
+            border-color: red;
+            box-shadow: 0 0 5px red;
+        }
+        .valid-input {
+            border-color: green;
+            box-shadow: 0 0 5px green;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gradient-primary">
+     <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Register</h1>
+                                    </div>
+                                    <form id="registrationForm" class="user" method="post" asp-action="Register" >
+                                        <div class="form-group">
+                                            <input type="text" asp-for="TenTaiKhoan" class="form-control form-control-user"
+                                                   aria-describedby="emailHelp" placeholder="User name" value="@Model?.TenTaiKhoan">
+                                            <span asp-validation-for="TenTaiKhoan" id="TenTaiKhoanError" class="error"></span>
+                                        </div>
+                                           @if (ViewBag.Suggestions != null)
+                                        {
+                                            <div class="form-group" style="color:red">
+                                                <label for="Suggestions">Tên tài khoản đã tồn tại. Thử các tên sau:</label>
+                                                <p id="Suggestions">
+                                                    @string.Join(", ", ViewBag.Suggestions as List<string>)
+                                                </p>
+                                            </div>
+                                        }
+                                        <div class="form-group">
+                                            <input type="password" asp-for="MatKhau" class="form-control form-control-user"
+                                                   placeholder="Password" value="@Model?.MatKhau">
+                                            <span asp-validation-for="MatKhau" id="MatKhauError" class="error"></span>
+                                        </div>
+                                          <div class="form-group">
+                                            <input type="password" asp-for="XacNhanMatKhau" class="form-control form-control-user"
+                                                   placeholder="Confirm Password" value="@Model?.XacNhanMatKhau">
+                                            <span asp-validation-for="XacNhanMatKhau" id="MatKhauError" class="error"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" asp-for="HoTen" class="form-control form-control-user"
+                                                   placeholder="Full Name" value="@Model?.HoTen">
+                                            <span asp-validation-for="HoTen" id="HoTenError" class="error"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" asp-for="SoDienThoai" class="form-control form-control-user"
+                                                   placeholder="Phone" value="@Model?.SoDienThoai">
+                                            <span asp-validation-for="SoDienThoai" id="SoDienThoaiError" class="error"></span>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Register
+                                        </button>
+                                    </form>
+                                 
+                                    <hr>
+
+                                    <div class="text-center">
+                                        <a class="small" href="/admin/user/login">Login</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/admintemplate/vendor/jquery/jquery.min.js"></script>
+    <script src="~/admintemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/admintemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/admintemplate/js/sb-admin-2.min.js"></script>
+
+  @*   <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@
+
+</body>
+</html>
+
+ @* <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        let isValid = true;
+
+        // Xử lý TenTaiKhoan
+        let tenTaiKhoan = document.getElementById('TenTaiKhoan');
+        let tenTaiKhoanError = document.getElementById('TenTaiKhoanError');
+        if (tenTaiKhoan.value.trim() === '') {
+            tenTaiKhoanError.textContent = 'User name is required.';
+            tenTaiKhoan.classList.add('error-input');
+            isValid = false;
+        } else {
+            tenTaiKhoanError.textContent = '';
+            tenTaiKhoan.classList.remove('error-input');
+            tenTaiKhoan.classList.add('valid-input');
+        }
+
+        // Xử lý MatKhau
+        let matKhau = document.getElementById('MatKhau');
+        let matKhauError = document.getElementById('MatKhauError');
+        if (matKhau.value.trim() === '') {
+            matKhauError.textContent = 'Password is required.';
+            matKhau.classList.add('error-input');
+            isValid = false;
+        } else {
+            matKhauError.textContent = '';
+            matKhau.classList.remove('error-input');
+            matKhau.classList.add('valid-input');
+        }
+
+        // Xử lý HoTen
+        let hoTen = document.getElementById('HoTen');
+        let hoTenError = document.getElementById('HoTenError');
+        if (hoTen.value.trim() === '') {
+            hoTenError.textContent = 'Full Name is required.';
+            hoTen.classList.add('error-input');
+            isValid = false;
+        } else {
+            hoTenError.textContent = '';
+            hoTen.classList.remove('error-input');
+            hoTen.classList.add('valid-input');
+        }
+
+        // Xử lý SoDienThoai
+        let soDienThoai = document.getElementById('SoDienThoai');
+        let soDienThoaiError = document.getElementById('SoDienThoaiError');
+        if (soDienThoai.value.trim() === '') {
+            soDienThoaiError.textContent = 'Phone is required.';
+            soDienThoai.classList.add('error-input');
+            isValid = false;
+        } else {
+            soDienThoaiError.textContent = '';
+            soDienThoai.classList.remove('error-input');
+            soDienThoai.classList.add('valid-input');
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Ngăn không cho gửi biểu mẫu nếu có lỗi
+        }
+    });
+
+    // Xử lý sự kiện khi người dùng nhập vào các trường
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', function() {
+            let errorElement = document.getElementById(this.id + 'Error');
+            if (this.value.trim() === '') {
+                errorElement.textContent = this.getAttribute('placeholder') + ' is required.';
+                this.classList.add('error-input');
+                this.classList.remove('valid-input');
+            } else {
+                errorElement.textContent = '';
+                this.classList.remove('error-input');
+                this.classList.add('valid-input');
+            }
+        });
+    });
+</script>
+ *@

@@ -1,0 +1,99 @@
+﻿@model List<WebPhongKham.Models.BacSi>
+@{
+    ViewBag.Title = "Doctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var ListDoctor = ViewBag.FullListDoctor as List<BacSi>;
+}
+<!-- search section -->
+<section class="book_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form asp-controller="Home" asp-action="Doctor" method="get">
+                    <h4>
+                        Tìm  <span>bác sỹ</span>
+                    </h4>
+                    <div class="form-row ">
+                        <div class="form-group col-lg-4">
+                            <label for="HoTen">Họ tên</label>
+                            <input name="HoTen" id="HoTen" type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="inputDoctorName">Chuyên khoa</label>
+                            <select name="chuyenKhoa" class="form-control wide" id="inputDoctorName">
+                                <option value="" selected disabled>Chọn chuyên khoa</option>
+                                @foreach (var chuyenkhoa in ListDoctor.Select(d => d.ChuyenKhoa).Distinct())
+                                {
+                                    <option value="@chuyenkhoa">@chuyenkhoa</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="inputDepartmentName">Địa chỉ</label>
+                            <select name="diaChi" class="form-control wide" id="inputDepartmentName">
+                                <option value="" selected disabled>Chọn địa chỉ</option>
+                                @foreach (var diachi in ListDoctor.Select(d => d.DiaChi).Distinct())
+                                {
+                                    <option value="@diachi">@diachi</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btn-box">
+                        <button type="submit" class="btn ">Search now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- team section -->
+
+<section class="team_section layout_padding">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                Our <span>Doctors</span>
+            </h2>
+        </div>
+        <div class="carousel-wrap ">
+            <div class="owl-carousel team_carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="i">
+                        <div class="box">
+                            <div class="img-box">
+                                <img src="~/clienttemplate/images/team@(item.Id).jpg" />
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    @item.HoTen
+                                </h5>
+                                <h6>
+                                    @item.ChuyenKhoa - Địa chỉ : @item.DiaChi
+                                </h6>
+                                <div class="social_box">
+                                    <a href="">
+                                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end team section -->

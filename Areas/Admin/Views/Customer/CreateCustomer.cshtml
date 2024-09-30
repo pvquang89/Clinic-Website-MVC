@@ -1,0 +1,55 @@
+﻿@model WebPhongKham.Models.KhachHang
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Thêm khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout-admin.cshtml";
+}
+
+<h3>Thêm khách hàng</h3>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="CreateCustomer" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="HoTen" class="control-label"></label>
+                <input asp-for="HoTen" class="form-control" />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySinh" class="control-label"></label>
+                <input asp-for="NgaySinh" class="form-control" type="date"/>
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoDienThoai" class="control-label"></label>
+                <input asp-for="SoDienThoai" class="form-control" />
+                <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoTien" class="control-label"></label>
+                <input asp-for="SoTien" class="form-control" />
+                <span asp-validation-for="SoTien" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+            <label asp-for="idDiaChi" class="control-label"></label>
+            <select asp-for="idDiaChi" class="form-control" asp-items="ViewBag.idDiaChi">
+                <option value="">Chọn địa chỉ</option>
+                @* Các lựa chọn địa chỉ sẽ được sinh ra ở đây *@
+            </select>
+            <span asp-validation-for="idDiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListCustomer">Back to List</a>
+</div>
+
