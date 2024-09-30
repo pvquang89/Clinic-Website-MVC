@@ -2,7 +2,7 @@
 
 namespace WebPhongKham.Models
 {
-    public class TinTuc
+    public class News
     {
         [Key]
         public int Id { get; set; }

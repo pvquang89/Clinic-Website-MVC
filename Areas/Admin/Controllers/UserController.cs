@@ -27,7 +27,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 return View();          
             }
 
-            var dsTaiKhoan = _context.TaiKhoans.FirstOrDefault(tk => tk.TenTaiKhoan == user && tk.MatKhau==pass);
+            var dsTaiKhoan = _context.Accounts.FirstOrDefault(tk => tk.TenTaiKhoan == user && tk.MatKhau==pass);
             if(dsTaiKhoan == null)
             {
                 ViewBag.Error = "Sai tên đăng nhập hoặc mật khẩu";
@@ -43,13 +43,13 @@ namespace WebPhongKham.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(TaiKhoan taikhoan)
+        public ActionResult Register(Account taikhoan)
         {
             if (!ModelState.IsValid)
             {
                 return View(taikhoan);
             }
-            var tk = _context.TaiKhoans.FirstOrDefault(tk => tk.TenTaiKhoan == taikhoan.TenTaiKhoan);
+            var tk = _context.Accounts.FirstOrDefault(tk => tk.TenTaiKhoan == taikhoan.TenTaiKhoan);
             if (tk != null)
             {
                 // Tạo danh sách gợi ý tên tài khoản
@@ -58,7 +58,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 //ModelState.AddModelError("TenTaiKhoan", "Tên tài khoản đã tồn tại.");
                 return View(taikhoan);
             }
-            _context.TaiKhoans.Add(taikhoan);
+            _context.Accounts.Add(taikhoan);
             _context.SaveChanges();
 
             return RedirectToAction("Login", new { area = "Admin" });

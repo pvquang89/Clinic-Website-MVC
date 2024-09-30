@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebPhongKham.Models
 {
-    public class TaiKhoan
+    public class Account
     {
         [Key]
         public int Id { get; set; }

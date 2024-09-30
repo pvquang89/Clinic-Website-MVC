@@ -34,23 +34,23 @@ namespace WebPhongKham.Areas.Admin.Controllers
             //page : trang bắt đầu 
             //số bản ghi 1 trang
             int pageSize = 10;
-            var donHangs = _context.DonHangs.Include(d => d.KhachHang).AsQueryable();
+            var Orders = _context.Orders.Include(d => d.KhachHang).AsQueryable();
             switch (sortOrder)
             {
                 case "date_desc":
-                    donHangs = donHangs.OrderByDescending(dh => dh.NgayDatHang);
+                    Orders = Orders.OrderByDescending(dh => dh.NgayDatHang);
                     break;
                 case "price_asc":
-                    donHangs = donHangs.OrderBy(dh => dh.TongTienSanPham);
+                    Orders = Orders.OrderBy(dh => dh.TongTienSanPham);
                     break;
                 case "price_desc":
-                    donHangs = donHangs.OrderByDescending(dh => dh.TongTienSanPham);
+                    Orders = Orders.OrderByDescending(dh => dh.TongTienSanPham);
                     break;
                 default:
-                    donHangs = donHangs.OrderBy(dh => dh.NgayDatHang); // Sắp xếp mặc định
+                    Orders = Orders.OrderBy(dh => dh.NgayDatHang); // Sắp xếp mặc định
                     break;
             }
-            return View(donHangs.ToPagedList(page ?? 1, pageSize));
+            return View(Orders.ToPagedList(page ?? 1, pageSize));
         }
 
         // GET: Admin/Order/Details/5
@@ -61,7 +61,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 return Content("Không tìm thấy");
             }
 
-            var donHang = await _context.DonHangs
+            var donHang = await _context.Orders
                 .Include(d => d.KhachHang)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (donHang == null)
@@ -75,14 +75,14 @@ namespace WebPhongKham.Areas.Admin.Controllers
         // GET: Admin/Order/Create
         public IActionResult Create()
         {
-            ViewData["idKhachHang"] = new SelectList(_context.KhachHangs, "Id", "HoTen");
+            ViewData["idKhachHang"] = new SelectList(_context.Customers, "Id", "HoTen");
             return View();
         }
 
         // POST: Admin/Order/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DonHang donHang, IFormFile? hinhAnh)
+        public async Task<IActionResult> Create(Order donHang, IFormFile? hinhAnh)
         {
             // Kiểm tra nếu dữ liệu hợp lệ
             if (ModelState.IsValid)
@@ -105,7 +105,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 // Sau khi thêm thành công, chuyển hướng về trang Index
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["idKhachHang"] = new SelectList(_context.KhachHangs, "Id", "HoTen");
+            ViewData["idKhachHang"] = new SelectList(_context.Customers, "Id", "HoTen");
             return View(donHang);
         }
 
@@ -115,18 +115,18 @@ namespace WebPhongKham.Areas.Admin.Controllers
             if (id == null)
                 return Content("Không có");
 
-            var donHang = await _context.DonHangs.FindAsync(id);
+            var donHang = await _context.Orders.FindAsync(id);
             if (donHang == null)
                 return Content("Không có thông tin sản phẩm");
 
-            ViewData["idKhachHang"] = new SelectList(_context.KhachHangs, "Id", "HoTen", donHang.idKhachHang);
+            ViewData["idKhachHang"] = new SelectList(_context.Customers, "Id", "HoTen", donHang.idKhachHang);
             return View(donHang);
         }
 
         // POST: Admin/Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, DonHang donHang, IFormFile? hinhAnh)
+        public async Task<IActionResult> Edit(int id, Order donHang, IFormFile? hinhAnh)
         {
             if (id != donHang.Id)
                 return NotFound();
@@ -153,7 +153,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["idKhachHang"] = new SelectList(_context.KhachHangs.ToList(), "Id", "HoTen", donHang.idKhachHang);
+            ViewData["idKhachHang"] = new SelectList(_context.Customers.ToList(), "Id", "HoTen", donHang.idKhachHang);
             return View(donHang);
         }
 
@@ -165,7 +165,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var donHang = await _context.DonHangs
+            var donHang = await _context.Orders
                 .Include(d => d.KhachHang)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (donHang == null)
@@ -181,10 +181,10 @@ namespace WebPhongKham.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var donHang = await _context.DonHangs.FindAsync(id);
+            var donHang = await _context.Orders.FindAsync(id);
             if (donHang != null)
             {
-                _context.DonHangs.Remove(donHang);
+                _context.Orders.Remove(donHang);
             }
 
             await _context.SaveChangesAsync();
@@ -193,7 +193,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         private bool DonHangExists(int id)
         {
-            return _context.DonHangs.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.Id == id);
         }
 
         public IActionResult Search(string keywordSearching, int? page)
@@ -208,7 +208,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
             }
 
             // Lọc kết quả dựa trên từ khóa tìm kiếm
-            var result = _context.DonHangs
+            var result = _context.Orders
                                  .Include(dh => dh.KhachHang)
                                  .Where(dh => dh.DiaChi.Contains(keywordSearching) ||
                                               dh.ThongTinSanPham.Contains(keywordSearching))

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using WebPhongKham.Models;
 namespace WebPhongKham.Models
 {
     public class AppDbContext : DbContext
@@ -9,12 +9,12 @@ namespace WebPhongKham.Models
 
         }
 
-        public DbSet<KhachHang> KhachHangs { get; set; }
-        public DbSet<DiaChi> DiaChis { get; set; }
-        public DbSet<LoaiTinh> LoaiTinhs { get; set; }
-        public DbSet<TaiKhoan> TaiKhoans { get; set; }
-        public DbSet<DonHang> DonHangs { get; set; }
-        public DbSet<TinTuc> TinTuc { get; set;}
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<ProvinceType> ProvinceTypes { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<News> News { get; set; }
 
 
 

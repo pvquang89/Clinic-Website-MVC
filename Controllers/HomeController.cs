@@ -7,9 +7,9 @@ namespace WebPhongKham.Controllers
 {
     public class HomeController : Controller
     {
-        public static List<BacSi> ListDoctor = new List<BacSi>()
+        public static List<Doctor> ListDoctor = new List<Doctor>()
         {
-            new BacSi{
+            new Doctor{
                 Id=1,
                 HoTen="Linh",
                 DiaChi = "Ha Noi",
@@ -17,7 +17,7 @@ namespace WebPhongKham.Controllers
                 ChuyenKhoa= "Răng hàm mặt",
                 LinkFace=""
             },
-            new BacSi()
+            new Doctor()
             {
                 Id = 2,
                 HoTen = "Quang",
@@ -26,7 +26,7 @@ namespace WebPhongKham.Controllers
                 ChuyenKhoa = "Tiêu hoá",
                 LinkFace = ""
             },
-            new BacSi()
+            new Doctor()
             {
                 Id = 3,
                 HoTen = "Ngọc",
@@ -35,7 +35,7 @@ namespace WebPhongKham.Controllers
                 ChuyenKhoa = "Tiêu hoá",
                 LinkFace = ""
             },
-            new BacSi()
+            new Doctor()
             {
                 Id = 4,
                 HoTen = "Hà",

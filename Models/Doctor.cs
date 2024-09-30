@@ -1,6 +1,6 @@
 ﻿namespace WebPhongKham.Models
 {
-    public class BacSi
+    public class Doctor
     {
         public int Id { get; set; }
         public string HoTen { get; set; }

@@ -17,7 +17,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
         }
         public IActionResult ListCustomer(int page = 1)
         {
-            var listCustomer = _context.KhachHangs.
+            var listCustomer = _context.Customers.
                             Include(kh => kh.DiaChi). //eager loading, tải luôn entity địa chỉ 
                             ToList();
 
@@ -39,9 +39,9 @@ namespace WebPhongKham.Areas.Admin.Controllers
         {
             //nếu ô tìm kiếm null thì trả về all danh sách
             if (String.IsNullOrEmpty(searchString))
-                return View("ListCustomer", _context.KhachHangs.ToList());
+                return View("ListCustomer", _context.Customers.ToList());
 
-            var result = _context.KhachHangs
+            var result = _context.Customers
                         .Include(kh => kh.DiaChi)
                         .Where(kh => kh.HoTen.Contains(searchString) ||
                                kh.DiaChi.TenTinh.Contains(searchString)).ToList();
@@ -55,20 +55,20 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         public IActionResult CreateCustomer()
         {
-            var diaChiList = _context.DiaChis.ToList();
+            var diaChiList = _context.Addresses.ToList();
             ViewBag.idDiaChi = new SelectList(diaChiList, "Id", "TenTinh");
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateCustomer(KhachHang khachHang)
+        public IActionResult CreateCustomer(Customer customer)
         {
-            ViewBag.idDiaChi = new SelectList(_context.DiaChis, "Id", "TenTinh");
+            ViewBag.idDiaChi = new SelectList(_context.Addresses, "Id", "TenTinh");
             if (!ModelState.IsValid)
-                return View(khachHang);
+                return View(customer);
             try
             {
-                _context.KhachHangs.Add(khachHang);
+                _context.Customers.Add(customer);
                 _context.SaveChanges();
                 return RedirectToAction("ListCustomer", new { Area = "Admin" });
             }
@@ -76,7 +76,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
             {
                 Console.WriteLine(ex.Message);
                 ModelState.AddModelError("", "Đã có lỗi xảy ra khi thêm khách hàng.");
-                return View(khachHang);
+                return View(customer);
             }
         }
 
@@ -85,11 +85,11 @@ namespace WebPhongKham.Areas.Admin.Controllers
         {
             if (id == null)
                 return Content("Không có");
-            var khachHang = _context.KhachHangs.Find(id);
-            if (khachHang == null)
+            var customer = _context.Customers.Find(id);
+            if (customer == null)
                 return Content($"Không tìm thấy kháchh hàng có id {id}");
-            ViewBag.idDiaChi = new SelectList(_context.DiaChis, "Id", "TenTinh");
-            return View(khachHang);
+            ViewBag.idDiaChi = new SelectList(_context.Addresses, "Id", "TenTinh");
+            return View(customer);
         }
 
 

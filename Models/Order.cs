@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebPhongKham.Models
 {
-    public class DonHang
+    public class Order
     {
         [Key]
         public int Id { get; set; }
@@ -30,7 +30,7 @@ namespace WebPhongKham.Models
 
         //
         [ForeignKey("idKhachHang")]
-        public KhachHang? KhachHang { get; set;}
+        public Customer? KhachHang { get; set;}
 
 
     }

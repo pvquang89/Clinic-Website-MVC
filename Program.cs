@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 //Cấu hình DbContext lấy chuỗi kết nối từ appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("dbWebPhongKham")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("dbClinicWebsite")));
 
 var app = builder.Build();
 

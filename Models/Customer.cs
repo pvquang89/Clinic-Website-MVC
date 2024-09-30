@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebPhongKham.Models
 {
-    public class KhachHang
+    public class Customer
     {
         [Key]
         public int Id { get; set; }
@@ -33,9 +33,9 @@ namespace WebPhongKham.Models
         //references properties
         [ForeignKey("idDiaChi")]
         [DisplayName("Địa chỉ")]
-        public DiaChi? DiaChi { get; set; }
+        public Address? DiaChi { get; set; }
 
-        public List<DonHang>? DonHangs { get; set; }
+        public List<Order>? DonHangs { get; set; }
 
     }
 }

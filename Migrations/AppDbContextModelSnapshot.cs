@@ -22,7 +22,39 @@ namespace WebPhongKham.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebPhongKham.Models.DiaChi", b =>
+            modelBuilder.Entity("WebPhongKham.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("HinhAnh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HoTen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MatKhau")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SoDienThoai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenTaiKhoan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("WebPhongKham.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,10 +73,83 @@ namespace WebPhongKham.Migrations
 
                     b.HasIndex("idLoaiTinh");
 
-                    b.ToTable("DiaChis");
+                    b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("WebPhongKham.Models.DonHang", b =>
+            modelBuilder.Entity("WebPhongKham.Models.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("HoTen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NgaySinh")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SoDienThoai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("SoTien")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("idDiaChi")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("idDiaChi");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("WebPhongKham.Models.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("HinhAnh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkSeo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TacGia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ThoiGianDang")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TieuDe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TomTat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
+            modelBuilder.Entity("WebPhongKham.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,46 +188,10 @@ namespace WebPhongKham.Migrations
 
                     b.HasIndex("idKhachHang");
 
-                    b.ToTable("DonHangs");
+                    b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("WebPhongKham.Models.KhachHang", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("HoTen")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("NgaySinh")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SoDienThoai")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("SoTien")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("idDiaChi")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("idDiaChi");
-
-                    b.ToTable("KhachHangs");
-                });
-
-            modelBuilder.Entity("WebPhongKham.Models.LoaiTinh", b =>
+            modelBuilder.Entity("WebPhongKham.Models.ProvinceType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,90 +205,30 @@ namespace WebPhongKham.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoaiTinhs");
+                    b.ToTable("ProvinceTypes");
                 });
 
-            modelBuilder.Entity("WebPhongKham.Models.TaiKhoan", b =>
+            modelBuilder.Entity("WebPhongKham.Models.Address", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("HinhAnh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HoTen")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MatKhau")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SoDienThoai")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenTaiKhoan")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaiKhoans");
-                });
-
-            modelBuilder.Entity("WebPhongKham.Models.TinTuc", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("HinhAnh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkSeo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NoiDung")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TacGia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ThoiGianDang")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TieuDe")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TomTat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TinTuc");
-                });
-
-            modelBuilder.Entity("WebPhongKham.Models.DiaChi", b =>
-                {
-                    b.HasOne("WebPhongKham.Models.LoaiTinh", "LoaiTinh")
+                    b.HasOne("WebPhongKham.Models.ProvinceType", "LoaiTinh")
                         .WithMany()
                         .HasForeignKey("idLoaiTinh");
 
                     b.Navigation("LoaiTinh");
                 });
 
-            modelBuilder.Entity("WebPhongKham.Models.DonHang", b =>
+            modelBuilder.Entity("WebPhongKham.Models.Customer", b =>
                 {
-                    b.HasOne("WebPhongKham.Models.KhachHang", "KhachHang")
+                    b.HasOne("WebPhongKham.Models.Address", "DiaChi")
+                        .WithMany()
+                        .HasForeignKey("idDiaChi");
+
+                    b.Navigation("DiaChi");
+                });
+
+            modelBuilder.Entity("WebPhongKham.Models.Order", b =>
+                {
+                    b.HasOne("WebPhongKham.Models.Customer", "KhachHang")
                         .WithMany("DonHangs")
                         .HasForeignKey("idKhachHang")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -228,16 +237,7 @@ namespace WebPhongKham.Migrations
                     b.Navigation("KhachHang");
                 });
 
-            modelBuilder.Entity("WebPhongKham.Models.KhachHang", b =>
-                {
-                    b.HasOne("WebPhongKham.Models.DiaChi", "DiaChi")
-                        .WithMany()
-                        .HasForeignKey("idDiaChi");
-
-                    b.Navigation("DiaChi");
-                });
-
-            modelBuilder.Entity("WebPhongKham.Models.KhachHang", b =>
+            modelBuilder.Entity("WebPhongKham.Models.Customer", b =>
                 {
                     b.Navigation("DonHangs");
                 });

@@ -2,7 +2,7 @@
 
 namespace WebPhongKham.Models
 {
-    public class DiaChi
+    public class Address
     {
         public int Id { get; set; }
         public string TenTinh { get; set; }
@@ -12,7 +12,7 @@ namespace WebPhongKham.Models
 
         //navigation properties
         [ForeignKey("idLoaiTinh")]
-        public LoaiTinh LoaiTinh { get; set; }
+        public ProvinceType LoaiTinh { get; set; }
 
     }
 }
