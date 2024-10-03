@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebPhongKham.Extension;
+using WebPhongKham.Extension;       
 using WebPhongKham.Models;
 using X.PagedList;
 
@@ -126,75 +126,60 @@ namespace WebPhongKham.Areas.Admin.Controllers
         // POST: Admin/Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Order donHang, IFormFile? hinhAnh)
+        //chưa xử lý đc update ảnh, lúc được lúc không 
+        public async Task<IActionResult> Edit(Order order, IFormFile? hinhAnh)
         {
-            if (id != donHang.Id)
-                return NotFound();
-
             if (ModelState.IsValid)
             {
-                try
+                var existOrder = await _context.Orders.FindAsync(order.Id);
+                if (existOrder == null) return NotFound();
+                //giữ nguyên hình ảnh cũ nếu không có hình ảnh mới được update
+                if (hinhAnh != null)
                 {
-                    if (hinhAnh != null)
-                    {
-                        var fileName = $"order_{donHang.Id}";
-                        var filePath = await _fileUploadHelper.UploadFileAsync(hinhAnh, "img/order", fileName);
-                        donHang.HinhAnh = filePath;
-                    }
-                    _context.Update(donHang);
-                    await _context.SaveChangesAsync();
+                    var fileName = $"order_{order.Id}";
+                    var filePath = await _fileUploadHelper.UploadFileAsync(hinhAnh, "img/order", fileName);
+                    existOrder.HinhAnh = filePath;
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DonHangExists(donHang.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
+                // Cập nhật các thuộc tính khác của đơn hàng
+                existOrder.NgayDatHang = order.NgayDatHang;
+                existOrder.DienThoai = order.DienThoai;
+                existOrder.ThongTinSanPham = order.ThongTinSanPham;
+                existOrder.DiaChi = order.DiaChi;
+                existOrder.TongTienSanPham = order.TongTienSanPham;
+                existOrder.PhiShip = order.PhiShip;
+                existOrder.idKhachHang = order.idKhachHang; // Cập nhật idKhachHang nếu cần
+
+                _context.Update(existOrder);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["idKhachHang"] = new SelectList(_context.Customers.ToList(), "Id", "HoTen", donHang.idKhachHang);
-            return View(donHang);
-        }
 
-        // GET: Admin/Order/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var donHang = await _context.Orders
-                .Include(d => d.KhachHang)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (donHang == null)
-            {
-                return NotFound();
-            }
-
-            return View(donHang);
+            ViewData["idKhachHang"] = new SelectList(_context.Customers.ToList(), "Id", "HoTen", order.idKhachHang);
+            return View(order);
         }
 
         // POST: Admin/Order/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
-            var donHang = await _context.Orders.FindAsync(id);
-            if (donHang != null)
+            try
             {
-                _context.Orders.Remove(donHang);
+                var order = _context.Orders.Find(id);
+                if (order != null)
+                {
+                    _context.Orders.Remove(order);
+                    _context.SaveChanges();
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false});
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (Exception)
+            {
+                return Json(new { success = false});
+            }
         }
 
-        private bool DonHangExists(int id)
-        {
-            return _context.Orders.Any(e => e.Id == id);
-        }
 
         public IActionResult Search(string keywordSearching, int? page)
         {

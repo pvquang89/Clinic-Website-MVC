@@ -70,6 +70,9 @@
                 <thead>
                     <tr>
                         <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.HinhAnh)
                         </th>
                         <th>
@@ -98,6 +101,9 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
                         <th>
                             @Html.DisplayNameFor(model => model.HinhAnh)
                         </th>
@@ -130,6 +136,9 @@
                     {
                         <tr>
                             <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
                                 <img src="@item.HinhAnh" alt="HinhAnh" style="width:100px;height:100px;" />
                             </td>
                             <td>
@@ -156,7 +165,7 @@
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                <a href="#" class="btn-delete" data-id="@item.Id">Delete</a>
                             </td>
                         </tr>
                     }
@@ -165,10 +174,7 @@
         </div>
     </div>
 </div>
-
 <br />
-
-
 
 @* Căn phải thanh phân trang bằng float-right của bootstrap *@
 <div class="float-right">
@@ -184,5 +190,44 @@
                 PageClasses = new string[] { "page-link" }
             })
 </div>
+
+
+@* Xử lý ajax *@
+<script>
+    $(document).ready(function () {
+        // Bắt sự kiện khi nhấn vào thẻ "Delete"
+        $('.btn-delete').on('click', function (e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+            var orderId = $(this).data('id'); // Lấy ID của đơn hàng
+            if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?')) {
+                // Gửi yêu cầu AJAX để xóa
+                $.ajax({
+                    url: '@Url.Action("Delete", "Order")', // Đường dẫn tới phương thức Delete
+                    type: 'POST',
+                    data: { id: orderId },
+                    success: function (result) {
+                        if (result.success) {
+                            // Xóa hàng trong bảng
+                            $('tr').has('a[data-id="' + orderId + '"]').fadeOut(500, function () {
+                                $(this).remove();
+                            });
+                        } else {
+                            alert('Xóa không thành công! Đơn hàng không tồn tại.');
+                        }
+                    },
+                    error: function () {
+                        alert('Đã xảy ra lỗi! Vui lòng thử lại.');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
 
 
