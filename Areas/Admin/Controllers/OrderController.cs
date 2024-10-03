@@ -18,10 +18,10 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         private readonly FileUploadHelper _fileUploadHelper;
 
-        public OrderController(AppDbContext context)
+        public OrderController(AppDbContext context, FileUploadHelper fileUploadHelper)
         {
             _context = context;
-            _fileUploadHelper = new FileUploadHelper();
+            _fileUploadHelper = fileUploadHelper;
         }
 
         // GET: Admin/Order

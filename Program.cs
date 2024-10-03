@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebPhongKham.Extension;
 using WebPhongKham.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,8 @@ builder.Services.AddControllersWithViews();
 //Cấu hình DbContext lấy chuỗi kết nối từ appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("dbClinicWebsite")));
-
+//đăng ký DI cho FileUploadHelper
+builder.Services.AddSingleton<FileUploadHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
