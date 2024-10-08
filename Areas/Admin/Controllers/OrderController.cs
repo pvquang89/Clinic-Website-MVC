@@ -28,6 +28,12 @@ namespace WebPhongKham.Areas.Admin.Controllers
         //Phần này chưa xử lý được khi sang trang khác vẫn được sắp xếp 
         public async Task<IActionResult> Index(int? page, string sortOrder)
         {
+            var user = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrEmpty(user))
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để vào dashbroad";
+                return RedirectToAction("Login", "User", new { area = "Admin" });
+            }
             ViewBag.CurrentSort = sortOrder;
             ViewBag.DateSort = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewBag.PriceSort = sortOrder == "price_asc" ? "price_desc" : "price_asc";

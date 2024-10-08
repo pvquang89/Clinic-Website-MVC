@@ -17,6 +17,12 @@ namespace WebPhongKham.Areas.Admin.Controllers
         }
         public IActionResult ListCustomer(int page = 1)
         {
+            var user = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrEmpty(user))
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để vào dashbroad";
+                return RedirectToAction("Login", "User", new { area = "Admin" });
+            }
             var listCustomer = _context.Customers.
                             Include(kh => kh.DiaChi). //eager loading, tải luôn entity địa chỉ 
                             ToList();
