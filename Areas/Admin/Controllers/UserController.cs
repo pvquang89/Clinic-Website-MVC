@@ -45,7 +45,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         public ActionResult Register()
