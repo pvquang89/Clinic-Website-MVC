@@ -1,6 +1,18 @@
 ﻿@{
     Layout = null;
 }
+
+@* thông báo nếu chưa đăng nhập *@
+@if (TempData["Error"] != null)
+{
+    <script>
+        window.onload = function () {
+            alert("Bạn cần đăng nhập để tiếp tục");
+        };
+    </script>
+}
+
+
 <!DOCTYPE html>
 <html lang="en">
 

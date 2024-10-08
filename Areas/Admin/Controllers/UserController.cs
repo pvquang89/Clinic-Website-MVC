@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebPhongKham.Extension;
 using WebPhongKham.Models;
 
 namespace WebPhongKham.Areas.Admin.Controllers
@@ -8,9 +9,9 @@ namespace WebPhongKham.Areas.Admin.Controllers
     {
         public readonly AppDbContext _context;
 
-        public UserController(AppDbContext appDbContext)
+        public UserController(AppDbContext context)
         {
-            _context = appDbContext;
+            _context = context;
         }
 
         public IActionResult Login()
@@ -27,14 +28,24 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 return View();          
             }
 
-            var dsTaiKhoan = _context.Accounts.FirstOrDefault(tk => tk.TenTaiKhoan == user && tk.MatKhau==pass);
-            if(dsTaiKhoan == null)
+            var acc = _context.Accounts.FirstOrDefault(tk => tk.TenTaiKhoan == user && tk.MatKhau==pass);
+            if(acc == null)
             {
                 ViewBag.Error = "Sai tên đăng nhập hoặc mật khẩu";
                 return View();
             }
-            //return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
-            return Redirect("/Admin/Dashboard/Index");
+
+            // Lưu thông tin đăng nhập vào session
+            HttpContext.Session.SetString("UserName", acc.TenTaiKhoan);
+            HttpContext.Session.SetString("Password", acc.MatKhau);
+            return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
+            //return Redirect("/Admin/Dashboard/Index");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()
