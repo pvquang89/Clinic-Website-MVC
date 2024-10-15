@@ -16,6 +16,13 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         public IActionResult Login()
         {
+            // Lấy thông báo lỗi từ Session và gán vào TempData
+            var messError = HttpContext.Session.GetString("ErrorLogin");
+            if (messError != null)
+            {
+                TempData["ErrorLogin"] = messError;
+                HttpContext.Session.Remove("ErrorLogin"); // Xóa sau khi lấy ra
+            }
             return View("Login");
         }
 
@@ -38,8 +45,8 @@ namespace WebPhongKham.Areas.Admin.Controllers
             // Lưu thông tin đăng nhập vào session
             HttpContext.Session.SetString("UserName", acc.TenTaiKhoan);
             HttpContext.Session.SetString("Password", acc.MatKhau);
+
             return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
-            //return Redirect("/Admin/Dashboard/Index");
         }
 
         public IActionResult Logout()

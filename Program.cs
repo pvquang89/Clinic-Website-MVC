@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using WebPhongKham.Extension;
 using WebPhongKham.Models;
 
@@ -12,14 +13,15 @@ builder.Services.AddControllersWithViews();
 
 //cấu hình sử dụng bộ nhớ đệm để lưu session
 builder.Services.AddDistributedMemoryCache();
-//
+//cấu hình session 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(20); // Thời gian hết hạn session
+    options.IdleTimeout = TimeSpan.FromMinutes(5); // Thời gian hết hạn session
     options.Cookie.HttpOnly = true; // Chỉ cho phép truy cập cookie từ server
     options.Cookie.IsEssential = true; // Cookie cần thiết cho ứng dụng
     options.Cookie.Name = "ClinicWebsite-Session"; // Đặt tên cho cookie session
 });
+
 
 //Cấu hình DbContext lấy chuỗi kết nối từ appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -49,6 +51,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
 //cấu hình session sau app.UseRouting(); 
 app.UseSession(); 
 
