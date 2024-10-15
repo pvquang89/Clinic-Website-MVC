@@ -31,7 +31,7 @@ namespace WebPhongKham.Models
 
         //nav properties
         //references properties
-        [ForeignKey("idDiaChi")]
+        [ForeignKey("idDiaChi")] //tức khoá ngoại idDiaChi ở bảng này là khoá ở bảng DiaChi
         [DisplayName("Địa chỉ")]
         public Address? DiaChi { get; set; }
 

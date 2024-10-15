@@ -23,5 +23,8 @@ namespace WebPhongKham.Models
         [NotMapped]
         [Compare("MatKhau", ErrorMessage = "Mật khẩu nhập lại chưa khớp")]
         public string XacNhanMatKhau { get; set; }
+
+        //
+        public virtual ICollection<AccountRole> AccountRoles { get; set; }
     }
 }
