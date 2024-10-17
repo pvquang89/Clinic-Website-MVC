@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebPhongKham.Extension;
 using WebPhongKham.Models;
 
@@ -45,6 +46,13 @@ namespace WebPhongKham.Areas.Admin.Controllers
             // Lưu thông tin đăng nhập vào session
             HttpContext.Session.SetString("UserName", acc.TenTaiKhoan);
             HttpContext.Session.SetString("Password", acc.MatKhau);
+
+            //kiểm tra quyền tài khoản
+            var roles = _context.AccountRoles.Include(ar=>ar.Role)
+                                               .Where(ar=>ar.AccountId==acc.Id)
+                                               .Select(ar=>ar.Role.RoleName)
+                                               .ToList();
+            HttpContext.Session.SetString("Roles",string.Join(",", roles));
 
             return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
         }
@@ -93,11 +101,5 @@ namespace WebPhongKham.Areas.Admin.Controllers
             }
             return suggestions;
         }
-
-
-
-  
-
-
     }
 }
