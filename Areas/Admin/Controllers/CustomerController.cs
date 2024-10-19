@@ -7,7 +7,7 @@ using WebPhongKham.Models;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [SessionAuthorize]
+    [SessionAuthorize("Admin","Manager")]
     public class CustomerController : Controller
     {
 
@@ -19,15 +19,6 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         public IActionResult ListCustomer(int page = 1)
         {
-
-            var roles = HttpContext.Session.GetString("Roles")?.Split(",") ?? new string[] { };
-
-            if (!roles.Contains("Admin"))
-            {
-                //return Content("Ko có quyền"); // Hoặc chuyển hướng đến trang lỗi
-                return Forbid();
-            }
-            //
             var listCustomer = _context.Customers.
                             Include(kh => kh.DiaChi). //eager loading, tải luôn entity địa chỉ 
                             ToList();
@@ -41,8 +32,6 @@ namespace WebPhongKham.Areas.Admin.Controllers
             var data = listCustomer.Skip(recSkip).Take(pager.PageSize).ToList();
 
             this.ViewBag.Pager = pager;
-
-            //return View("ListCustomer", listCustomer);
             return View(data);
         }
 

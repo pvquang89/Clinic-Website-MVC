@@ -57,7 +57,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); //thêm
+//
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 //cấu hình session sau app.UseRouting(); 
