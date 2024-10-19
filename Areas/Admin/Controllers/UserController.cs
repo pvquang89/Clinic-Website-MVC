@@ -33,11 +33,11 @@ namespace WebPhongKham.Areas.Admin.Controllers
             if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
             {
                 ViewBag.Error = "Username và password không được để trống.";
-                return View();          
+                return View();
             }
 
-            var acc = _context.Accounts.FirstOrDefault(tk => tk.TenTaiKhoan == user && tk.MatKhau==pass);
-            if(acc == null)
+            var acc = _context.Accounts.FirstOrDefault(tk => tk.TenTaiKhoan == user && tk.MatKhau == pass);
+            if (acc == null)
             {
                 ViewBag.Error = "Sai tên đăng nhập hoặc mật khẩu";
                 return View();
@@ -99,7 +99,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
             var suggestions = new List<string>();
             for (int i = 1; i <= 3; i++)
             {
-                suggestions.Add($"{existingUsername}{new Random().Next(10,100)}");
+                suggestions.Add($"{existingUsername}{new Random().Next(10, 100)}");
             }
             return suggestions;
         }

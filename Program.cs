@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.LoginPath = "/Admin/User/Login"; // Đường dẫn tới trang đăng nhập
-        options.AccessDeniedPath = "/Home/Doctor"; // Đường dẫn tới trang từ chối
+        options.AccessDeniedPath = "/Admin/Dashboard/NoAccess"; // Đường dẫn tới trang từ chối
     });
 
 //Cấu hình DbContext lấy chuỗi kết nối từ appsettings.json

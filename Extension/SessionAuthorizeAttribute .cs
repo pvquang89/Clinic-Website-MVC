@@ -22,7 +22,7 @@ namespace WebPhongKham.Extension
         //phương thức này được gọi trước khi action đươc thực hiện
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var session  = context.HttpContext.Session;
+            var session = context.HttpContext.Session;
             var userName = session.GetString("UserName");
             // Kiểm tra xem Session có lưu thông tin người dùng hay không
             if (string.IsNullOrEmpty(userName))
@@ -43,8 +43,8 @@ namespace WebPhongKham.Extension
                 }
 
                 var userRoles = rolesString.Split(',');
-                bool hasRequerieRole = _requerieRoles.Any(role=>userRoles.Contains(role));
-                if(!hasRequerieRole)
+                bool hasRequerieRole = _requerieRoles.Any(role => userRoles.Contains(role));
+                if (!hasRequerieRole)
                 {
                     // Nếu không có quyền, ngăn truy cập
                     context.Result = new ForbidResult();

@@ -4,7 +4,7 @@ using WebPhongKham.Extension;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [SessionAuthorize("Admin", "Manager")]
+    [SessionAuthorize("Admin", "Manager", "Viewer")]
     public class DashboardController : Controller
     {
         public IActionResult Index()
@@ -12,6 +12,10 @@ namespace WebPhongKham.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult NoAccess()
+        {
+            return View();
+        }
 
     }
 }

@@ -7,7 +7,7 @@ using WebPhongKham.Models;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [SessionAuthorize("Admin","Manager")]
+    [SessionAuthorize("Admin", "Manager")]
     public class CustomerController : Controller
     {
 
