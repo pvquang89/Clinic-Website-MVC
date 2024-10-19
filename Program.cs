@@ -22,6 +22,13 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = "ClinicWebsite-Session"; // Đặt tên cho cookie session
 });
 
+//cấu hình
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Admin/User/Login"; // Đường dẫn tới trang đăng nhập
+        options.AccessDeniedPath = "/Home/Doctor"; // Đường dẫn tới trang từ chối
+    });
 
 //Cấu hình DbContext lấy chuỗi kết nối từ appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -50,6 +57,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 //cấu hình session sau app.UseRouting(); 

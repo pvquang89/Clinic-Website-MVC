@@ -8,7 +8,6 @@ namespace WebPhongKham.Models
         public int Id { get; set; }
         public string RoleName { get; set; }
 
-        //
         public virtual ICollection<AccountRole> AccountRoles { get; set; }
     }
 }

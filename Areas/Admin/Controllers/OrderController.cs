@@ -12,7 +12,7 @@ using X.PagedList;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [SessionAuthorize]
+    [SessionAuthorize("Admin","Manager")]
     public class OrderController : Controller
     {
         private readonly AppDbContext _context;

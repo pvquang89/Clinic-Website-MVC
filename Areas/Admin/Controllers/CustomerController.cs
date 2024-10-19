@@ -7,7 +7,7 @@ using WebPhongKham.Models;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [SessionAuthorize]
+    [SessionAuthorize("Admin","Manager")]
     public class CustomerController : Controller
     {
 
@@ -32,8 +32,6 @@ namespace WebPhongKham.Areas.Admin.Controllers
             var data = listCustomer.Skip(recSkip).Take(pager.PageSize).ToList();
 
             this.ViewBag.Pager = pager;
-
-            //return View("ListCustomer", listCustomer);
             return View(data);
         }
 
