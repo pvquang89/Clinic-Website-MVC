@@ -53,7 +53,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
                                                .Select(ar => ar.Role.RoleName)
                                                .ToList();
 
-            //tạo session để lưu thông tin roles 
+            //tạo session để lưu thông tin roles thành 1 chuỗi  
             HttpContext.Session.SetString("Roles", string.Join(",", roles));
 
             return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });

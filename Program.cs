@@ -22,7 +22,7 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = "ClinicWebsite-Session"; // Đặt tên cho cookie session
 });
 
-//cấu hình
+//cấu hình dịch vụ xác thực
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -57,7 +57,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//
+//thêm app.UseAuthentication(); để cấu hình dịch vụ xác thực
 app.UseAuthentication(); 
 app.UseAuthorization();
 

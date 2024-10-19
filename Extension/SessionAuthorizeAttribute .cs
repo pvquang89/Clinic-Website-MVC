@@ -13,7 +13,8 @@ namespace WebPhongKham.Extension
 
         public readonly string[] _requerieRoles;
 
-        //
+        //khi dùng params với arr, c# sẽ tự định nghĩa các đối số truyền vào thành kiểu arr
+        //nên không cần phải tạo mảng rồi truyền vào 
         public SessionAuthorizeAttribute(params string[] roles)
         {
             _requerieRoles = roles;
@@ -30,23 +31,24 @@ namespace WebPhongKham.Extension
                 // Nếu không có, chuyển hướng đến trang đăng nhập
                 session.SetString("ErrorLogin", "Bạn cần đăng nhập để truy cập trang này");
                 context.Result = new RedirectToActionResult("Login", "User", new { area = "Admin" });
-                return; //thoát khỏi 
+                return; 
             }
             //kiểm tra quyền nếu có 
             if (_requerieRoles.Length > 0 && _requerieRoles != null)
             {
+                //lấy thông tin Roles từ session
                 var rolesString = session.GetString("Roles");
                 if (string.IsNullOrEmpty(rolesString))
                 {
+                    //ForbidResult là 1 class đại diện cho từ chối truy cập
                     context.Result = new ForbidResult();
                     return;
                 }
-
+                //tách chuỗi roles từ session thành 1 arr
                 var userRoles = rolesString.Split(',');
                 bool hasRequerieRole = _requerieRoles.Any(role => userRoles.Contains(role));
                 if (!hasRequerieRole)
                 {
-                    // Nếu không có quyền, ngăn truy cập
                     context.Result = new ForbidResult();
                     return;
                 }
