@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebPhongKham.Models.Account>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout-admin.cshtml";
+}
+
+<h1>Danh sách tài khoản</h1>
+
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+      style="float:right" asp-action="Search" asp-controller="Customer" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+               aria-label="Search" aria-describedby="basic-addon2"
+               name="searchString">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenTaiKhoan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatKhau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoDienThoai)
+            </th>
+            <th>
+                Loại tài khoản
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenTaiKhoan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MatKhau)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @if (item.AccountRoles != null && item.AccountRoles.Any())
+                    {
+                        <ul>
+                            @foreach(var accRole in item.AccountRoles)
+                            {
+                                <li>@accRole.Role.RoleName</li>
+                            }
+                        </ul>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Setting" asp-route-id="@item.Id">Setting</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
