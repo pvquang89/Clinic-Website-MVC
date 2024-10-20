@@ -133,6 +133,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //đây là đơn hàng trong csdl , còn order là đơn hàng nhận từ form gửi lên
                 var existOrder = await _context.Orders.FindAsync(order.Id);
                 if (existOrder == null) return NotFound();
                 //giữ nguyên hình ảnh cũ nếu không có hình ảnh mới được update

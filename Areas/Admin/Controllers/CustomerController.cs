@@ -92,18 +92,22 @@ namespace WebPhongKham.Areas.Admin.Controllers
             return View(customer);
         }
 
-        //
-        //[HttpPost]
-        //public IActionResult Edit(int id, Customer customer)
-        //{
-        //    if (id == null)
-        //        return Content("Không có");
-        //    var c = _context.Customers.Find(id);
-        //    if (ModelState.IsValid)
-        //    {
 
-        //    }
-        //}
+        [HttpPost]
+        public IActionResult Edit(int id, Customer customer)
+        {
+            //kiểm tra id từ url với id từ form
+            if (id != customer.Id)
+                return NotFound();
+            if (ModelState.IsValid)
+            {
+                _context.Customers.Update(customer);
+                _context.SaveChanges();
+                return RedirectToAction("ListCustomer");
+            }
+            ViewBag.idDiaChi = new SelectList(_context.Addresses, "Id", "TenTinh");
+            return View(customer);
+        }
 
 
     }
