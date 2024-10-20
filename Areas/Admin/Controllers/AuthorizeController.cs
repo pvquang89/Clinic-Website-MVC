@@ -6,7 +6,6 @@ using WebPhongKham.Models;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //chỉ mangager mới dùng được chức năng này
     [SessionAuthorize("Manager")] 
     public class AuthorizeController : Controller
     {
