@@ -5,12 +5,10 @@ using WebPhongKham.Models;
 
 namespace WebPhongKham.Areas.Admin.Controllers
 {
-    //note trước khi amend
+    //xoá hết
+    //sửa note sau khi đã push commit lên remote
     [Area("Admin")]
     [SessionAuthorize("Manager")]
-    //note sau khi amend
-    //1
-    //2
     public class AuthorizeController : Controller
     {
         public readonly AppDbContext _context;
