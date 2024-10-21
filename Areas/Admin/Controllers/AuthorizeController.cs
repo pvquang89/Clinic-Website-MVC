@@ -5,6 +5,7 @@ using WebPhongKham.Models;
 
 namespace WebPhongKham.Areas.Admin.Controllers
 {
+    //note trước khi amend
     [Area("Admin")]
     [SessionAuthorize("Manager")]
     public class AuthorizeController : Controller
