@@ -5,8 +5,10 @@ using WebPhongKham.Models;
 
 namespace WebPhongKham.Areas.Admin.Controllers
 {
+    //note trước khi amend
     [Area("Admin")]
     [SessionAuthorize("Manager")]
+    //note sau khi amend
     public class AuthorizeController : Controller
     {
         public readonly AppDbContext _context;
