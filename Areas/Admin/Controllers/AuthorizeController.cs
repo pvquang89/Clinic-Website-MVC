@@ -9,6 +9,8 @@ namespace WebPhongKham.Areas.Admin.Controllers
     [Area("Admin")]
     [SessionAuthorize("Manager")]
     //note sau khi amend
+    //1
+    //2
     public class AuthorizeController : Controller
     {
         public readonly AppDbContext _context;
