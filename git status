@@ -1,0 +1,119 @@
+[33mcommit 90435582dbcc70753aa8311a2da662665c2a53f4[m[33m ([m[1;36mHEAD -> [m[1;32mtest[m[33m)[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Mon Oct 21 14:12:35 2024 +0700
+
+    da them pham van quang
+
+[33mcommit 5f138b782c81ad9e7fb3198cb8d92638b361778b[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: d14c26b 59a4bb3
+Author: pvq89 <90265127+pvquang89@users.noreply.github.com>
+Date:   Sun Oct 20 23:20:49 2024 +0700
+
+    Merge pull request #2 from pvquang89/develop
+    
+    Create AuthorizeController, add index view
+
+[33mcommit 59a4bb382bd815f4c43f391679203ab195d2dc88[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Sun Oct 20 23:18:37 2024 +0700
+
+    Create AuthorizeController, add index view
+
+[33mcommit d14c26b65e36eb9b67ecf50a8ee59f62bf663e5c[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Sun Oct 20 16:06:54 2024 +0700
+
+    add edit action for CustomerController
+
+[33mcommit 0236acc820ddfb22ff73e6381e57fbfa0e2c6907[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Sat Oct 19 17:16:13 2024 +0700
+
+    Add note for authentication class
+
+[33mcommit 8c8e97a6a4c25219b92bfb037dc8cf661086a5c8[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Sat Oct 19 16:48:41 2024 +0700
+
+    add NoAccess view
+
+[33mcommit 223dc2942f59da2a00c10682b5d9adf568894997[m
+Merge: c383b2b edc572f
+Author: pvq89 <90265127+pvquang89@users.noreply.github.com>
+Date:   Sat Oct 19 16:02:10 2024 +0700
+
+    Merge pull request #1 from pvquang89/develop
+    
+    Account authorization processing
+
+[33mcommit edc572fa4d538f41818e66abfda5b3b08826bad7[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Sat Oct 19 15:58:06 2024 +0700
+
+    config authentication for admin area
+
+[33mcommit 918ad2e51076123f7dce03591f6f3e51be00f0ce[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Thu Oct 17 14:50:49 2024 +0700
+
+    account authorization processing
+
+[33mcommit c383b2b3fee88142ba560daac8a7b90c401ab366[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Tue Oct 15 16:31:52 2024 +0700
+
+    Create Role and Account model
+
+[33mcommit c6842a253b13017a049d4cb2693d0f2af7e396ae[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Tue Oct 15 14:34:40 2024 +0700
+
+    Use session to authenticate login
+
+[33mcommit a2f6ea81a6a0731a4a94c0622bd1762cedf44e26[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Tue Oct 8 22:47:52 2024 +0700
+
+    Add logout action
+
+[33mcommit 3f3ae41ed3120de7c45fa7e320e57cfc956b573b[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Tue Oct 8 22:16:51 2024 +0700
+
+    Session config for order, customer
+
+[33mcommit a939e39cc8e7740a38075323876e6c51bb80db7c[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Tue Oct 8 22:12:47 2024 +0700
+
+    session config for login, dashbroad
+
+[33mcommit fd708b55c359ef56f96252d36deb42d8fcf5e5eb[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Thu Oct 3 22:10:13 2024 +0700
+
+    Register DI for FileUploadHelper
+
+[33mcommit 74903c869fceacb04ba1b332879fc1c54c5d3786[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Thu Oct 3 15:18:41 2024 +0700
+
+    Remove Delete.cshtml
+
+[33mcommit fc88d89dc4d206f333ccd87f8d51249ae4ea7cdd[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Thu Oct 3 14:41:13 2024 +0700
+
+    OrderController : fix edit action, using ajax for delete action
+
+[33mcommit 8f86ff08ee5ab76963432645955c64e7565b80d4[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Mon Sep 30 21:58:27 2024 +0700
+
+    Change model names to English
+
+[33mcommit d2edc1accf557a01281671f875871ab069b73517[m
+Author: pvquang89 <phamvanquang12042002@gmail.com>
+Date:   Mon Sep 30 19:51:33 2024 +0700
+
+    Add project files.
