@@ -6,6 +6,7 @@ using WebPhongKham.Models;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //pham van quang
     [SessionAuthorize("Manager")]
     public class AuthorizeController : Controller
     {
