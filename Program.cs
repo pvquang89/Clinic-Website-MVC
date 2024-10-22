@@ -16,7 +16,7 @@ builder.Services.AddDistributedMemoryCache();
 //cấu hình session 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(5); // Thời gian hết hạn session
+    options.IdleTimeout = TimeSpan.FromMinutes(10); // Thời gian hết hạn session
     options.Cookie.HttpOnly = true; // Chỉ cho phép truy cập cookie từ server
     options.Cookie.IsEssential = true; // Cookie cần thiết cho ứng dụng
     options.Cookie.Name = "ClinicWebsite-Session"; // Đặt tên cho cookie session

@@ -1,0 +1,73 @@
+﻿@model WebPhongKham.Models.Account
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Setting";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout-admin.cshtml";
+}
+
+<h1>Setting</h1>
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <!-- Phần chi tiết tài khoản -->
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.TenTaiKhoan)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.TenTaiKhoan)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.MatKhau)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.MatKhau)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.HoTen)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.HoTen)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.SoDienThoai)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.SoDienThoai)
+            </dd>
+            <dt class="col-sm-3">
+                Loại tài khoản
+            </dt>
+            <dd class="col-sm-9">
+                @foreach (var acc in Model.AccountRoles)
+                {
+                    <li>@acc.Role.RoleName</li>
+                }
+            </dd>
+        </dl>
+    </div>
+
+    <!-- Sidebar phân quyền bên phải -->
+    <div class="col-md-4">
+        <h3>Phân quyền tài khoản</h3>
+        <form asp-area="Admin" asp-controller="Authorize" asp-action="SavePermissions" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            @foreach (var role in ViewBag.Roles as List<WebPhongKham.Models.Role>)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="roles" value="@role.Id"
+                    @(Model.AccountRoles.Any(ar => ar.RoleId == role.Id) ? "checked" : "") />
+                    <label class="form-check-label">@role.RoleName</label>
+                </div>
+            }
+            <button type="submit" class="btn btn-primary mt-3">Lưu phân quyền</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
