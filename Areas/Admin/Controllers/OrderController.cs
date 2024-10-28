@@ -29,7 +29,6 @@ namespace WebPhongKham.Areas.Admin.Controllers
         //Phần này chưa xử lý được khi sang trang khác vẫn được sắp xếp 
         public async Task<IActionResult> Index(int? page, string sortOrder)
         {
-
             ViewBag.CurrentSort = sortOrder;
             ViewBag.DateSort = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             ViewBag.PriceSort = sortOrder == "price_asc" ? "price_desc" : "price_asc";
