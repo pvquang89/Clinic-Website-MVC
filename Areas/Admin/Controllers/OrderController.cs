@@ -13,7 +13,7 @@ using X.PagedList;
 namespace WebPhongKham.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[SessionAuthorize("Admin", "Manager")]
+    [SessionAuthorize("Admin", "Manager")]
     public class OrderController : Controller
     {
         private readonly AppDbContext _context;
@@ -88,7 +88,7 @@ namespace WebPhongKham.Areas.Admin.Controllers
             {
                 // Thêm đơn hàng vào database
                 _context.Add(donHang);
-                await _context.SaveChangesAsync();
+                await _orderRepository.SaveAsync();
 
                 //xử lý hình ảnh nếu có
                 if (hinhAnh != null)
@@ -96,8 +96,8 @@ namespace WebPhongKham.Areas.Admin.Controllers
                     var fileName = $"order_{donHang.Id}";
                     var filePath = await _fileUploadHelper.UploadFileAsync(hinhAnh, "img/order", fileName);
                     donHang.HinhAnh = filePath;
-                    _context.Update(donHang);
-                    await _context.SaveChangesAsync();
+                    _orderRepository.Update(donHang);
+                    await _orderRepository.SaveAsync();
                 }
                 // Sau khi thêm thành công, chuyển hướng về trang Index
                 return RedirectToAction(nameof(Index));
