@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using WebPhongKham.Extension;
 using WebPhongKham.Models;
+using WebPhongKham.Repositories;
 
 namespace WebPhongKham.Areas.Admin.Controllers
 {
@@ -11,17 +13,20 @@ namespace WebPhongKham.Areas.Admin.Controllers
     public class CustomerController : Controller
     {
 
-        public readonly AppDbContext _context;
-        public CustomerController(AppDbContext context)
+        private readonly AppDbContext _context;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<Address> _addressRepository;
+
+        public CustomerController(AppDbContext context, IRepository<Customer> customerRepository, IRepository<Address> addressRepository)
         {
             _context = context;
+            _customerRepository = customerRepository;
+            _addressRepository = addressRepository;
         }
 
         public IActionResult ListCustomer(int page = 1)
         {
-            var listCustomer = _context.Customers.
-                            Include(kh => kh.DiaChi). //eager loading, tải luôn entity địa chỉ 
-                            ToList();
+            var listCustomer = _customerRepository.GetAll(c => c.DiaChi);
 
             const int pageSize = 10;
             if (page < 1)
@@ -37,17 +42,16 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         public IActionResult Search(string searchString)
         {
+            var data = _customerRepository.GetAll(c => c.DiaChi);
             //nếu ô tìm kiếm null thì trả về all danh sách
             if (String.IsNullOrEmpty(searchString))
-                return View("ListCustomer", _context.Customers.ToList());
+                return View("ListCustomer", data.ToList());
 
-            var result = _context.Customers
-                        .Include(kh => kh.DiaChi)
-                        .Where(kh => kh.HoTen.Contains(searchString) ||
-                               kh.DiaChi.TenTinh.Contains(searchString)).ToList();
+            var result = data.Where(kh => kh.HoTen.Contains(searchString) ||
+                                kh.DiaChi.TenTinh.Contains(searchString)).ToList();
 
             // Nếu không có kết quả, gửi thông báo
-            if (result == null || result.Count == 0)
+            if (!result.Any())
                 ViewBag.Message = "Không tìm thấy kết quả nào.";
 
             return View("ListCustomer", result);
@@ -55,21 +59,20 @@ namespace WebPhongKham.Areas.Admin.Controllers
 
         public IActionResult CreateCustomer()
         {
-            var diaChiList = _context.Addresses.ToList();
-            ViewBag.idDiaChi = new SelectList(diaChiList, "Id", "TenTinh");
+            GetAddressList();
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateCustomer(Customer customer)
         {
-            ViewBag.idDiaChi = new SelectList(_context.Addresses, "Id", "TenTinh");
+            GetAddressList();
             if (!ModelState.IsValid)
                 return View(customer);
             try
             {
-                _context.Customers.Add(customer);
-                _context.SaveChanges();
+                _customerRepository.Insert(customer);
+                _customerRepository.Save();
                 return RedirectToAction("ListCustomer", new { Area = "Admin" });
             }
             catch (Exception ex)
@@ -83,15 +86,15 @@ namespace WebPhongKham.Areas.Admin.Controllers
         //Edit
         public IActionResult Edit(int? id)
         {
+            //id giờ là kiểu nullable nên có thể null
             if (id == null)
-                return Content("Không có");
-            var customer = _context.Customers.Find(id);
+                return Content("Không có id trong request");
+            var customer = _customerRepository.GetById(id.Value); // Dùng id.Value để lấy giá trị thực của id
             if (customer == null)
                 return Content($"Không tìm thấy kháchh hàng có id {id}");
-            ViewBag.idDiaChi = new SelectList(_context.Addresses, "Id", "TenTinh");
+            GetAddressList();
             return View(customer);
         }
-
 
         [HttpPost]
         public IActionResult Edit(int id, Customer customer)
@@ -101,14 +104,17 @@ namespace WebPhongKham.Areas.Admin.Controllers
                 return NotFound();
             if (ModelState.IsValid)
             {
-                _context.Customers.Update(customer);
-                _context.SaveChanges();
+                _customerRepository.Update(customer);
+                _customerRepository.Save();
                 return RedirectToAction("ListCustomer");
             }
-            ViewBag.idDiaChi = new SelectList(_context.Addresses, "Id", "TenTinh");
+            GetAddressList();
             return View(customer);
         }
 
-
+        public void GetAddressList()
+        {
+            ViewBag.idDiaChi = new SelectList(_addressRepository.GetAll().ToList(), "Id", "TenTinh");
+        }
     }
 }

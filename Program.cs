@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebPhongKham.Extension;
 using WebPhongKham.Models;
+using WebPhongKham.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,10 +36,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("dbClinicWebsite")));
 
 
+//đăng ký DI
 //đăng ký DI cho fileuploadhelper 
 builder.Services.AddSingleton<FileUploadHelper>();
 //đăng ký DI cho session
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//đăng ký DI cho Reponsitory Pattern 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 
 
 

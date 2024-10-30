@@ -139,7 +139,15 @@
                                 @Html.DisplayFor(modelItem => item.Id)
                             </td>
                             <td>
-                                <img src="@item.HinhAnh" alt="HinhAnh" style="width:100px;height:100px;" />
+                      @*           <img src="@item.HinhAnh" alt="HinhAnh" style="width:100px;height:100px;" /> *@
+                                @if (!string.IsNullOrEmpty(item.HinhAnh))
+                                {
+                                    <img src="@item.HinhAnh" alt="Lỗi hình ảnh" style="width:100px;height:100px;" />
+                                }
+                                else
+                                {
+                                    <span>Chưa có hình ảnh</span>
+                                }
                             </td>
                             <td>
                                 @item.NgayDatHang.ToString("dd/MM/yyyy")
