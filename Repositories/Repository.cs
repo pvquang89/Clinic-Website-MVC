@@ -35,5 +35,26 @@ namespace WebPhongKham.Repositories
         public void Update(T entity) => _dbset.Update(entity);
         public void Delete(T entity) => _dbset.Remove(entity);
         public void Save() => _context.SaveChanges();
+
+
+        //bất đồng bộ
+        //T? : T có thể null
+        public async Task<T?> GetByIdAsync(int id) => await _dbset.FindAsync(id);
+
+        public async Task InsertAsync(T entity) => await _dbset.AddAsync(entity);
+
+        public async Task UpdateAsync(T entity)
+        {
+            _dbset.Update(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            _dbset.Remove(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
     }
 }

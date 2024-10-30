@@ -12,5 +12,15 @@ namespace WebPhongKham.Repositories
         void Delete(T entity);
         void Save();
 
+
+
+        //bất đồng bộ 
+        Task<T> GetByIdAsync(int id);
+        Task InsertAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task SaveAsync();
+
+
     }
 }
