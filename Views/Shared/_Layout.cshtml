@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -37,6 +53,14 @@
 
 <body>
 
+    <!-- Thanh thông báo -->
+@*     @if (TempData["LoginRequired"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-bottom: 0; text-align: center;">
+            @TempData["LoginRequired"]
+            <a href="@Url.Action("Login", "User", new { area = "Admin" })" class="btn btn-primary btn-sm">Đăng nhập ngay</a>
+        </div>
+    } *@
     <div class="hero_area">
         <!-- header section strats -->
         <header class="header_section">
@@ -90,6 +114,13 @@
                                         <a class="nav-link" href="~/Home/Doctor">Doctors</a>
                                     </li>
 
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="~/Checkout/Upgrade">Update Account</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="~/Home/PremiumFeature">For Vip</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="quote_btn-container">

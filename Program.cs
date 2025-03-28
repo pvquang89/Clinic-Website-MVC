@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebPhongKham.Extension;
 using WebPhongKham.Models;
 using WebPhongKham.Repositories;
+using WebPhongKham.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,8 @@ builder.Services.AddSingleton<FileUploadHelper>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 //đăng ký DI cho Reponsitory Pattern 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
+//
+builder.Services.AddSingleton<IVnpayService,VnPayService>();
 
 
 
